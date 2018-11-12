@@ -1,9 +1,16 @@
 <template>
   <div id="app">
-    <div id="nav">
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <router-link to="/" class="navbar-item">
+          <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+        </router-link>
+      </div>
+    </nav>
+    <!-- <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
-    </div>
+    </div> -->
     <router-view/>
   </div>
 </template>
@@ -13,7 +20,6 @@
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 #nav {
