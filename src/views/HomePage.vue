@@ -33,13 +33,8 @@
 <!-- https://coolors.co/808f85-f2e9dc-91c499-2f4858-daf7dc -->
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
 export default {
-  name: 'home',
-  components: {
-    HelloWorld
-  }
+  name: 'HomePage',
 }
 </script>
 <style lang='scss'>
