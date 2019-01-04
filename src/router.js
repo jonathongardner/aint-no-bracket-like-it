@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import HomePage from './views/HomePage.vue'
 import BracketPage from './views/BracketPage.vue'
 import NotFoundPage from './views/NotFoundPage.vue'
+import bracketOptions from '@/helpers/bracketOptions.js'
 
 Vue.use(Router)
 
