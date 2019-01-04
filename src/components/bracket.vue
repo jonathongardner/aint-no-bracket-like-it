@@ -3,7 +3,8 @@ Use slots so it will be easier when user can edit Bracket
 so data doesnt have to keep propagating up
 -->
 <template>
-  <div>
+  <div class='is-light'>
+    <slot />
     <bracket-template>
       <template v-for="(game, gameNumber) in games">
         <match-up :slot="'game' + gameNumber" :game='game'/>
@@ -36,4 +37,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+// .bracket {
+//   background: #f2f2f2;
+// }
 </style>

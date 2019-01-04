@@ -1,7 +1,8 @@
 <template>
-  <div>
-    <year-picker class="has-text-centered" :year='$route.params.year' @change='getBracket'></year-picker>
-    <bracket :games='games'></bracket>
+  <div id='bracket-page'>
+    <bracket :games='games'>
+      <year-picker class="has-text-centered" :year='$route.params.year' @change='getBracket'></year-picker>
+    </bracket>
   </div>
   <!-- class="subtitle is-3 has-text-centered" -->
 </template>
@@ -39,3 +40,8 @@ export default {
   }
 }
 </script>
+<style>
+#bracket-page {
+  padding: 10px;
+}
+</style>

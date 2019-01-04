@@ -132,7 +132,6 @@ export default {
   // display: flex;
   // flex-direction: column;
   // justify-content: space-between;
-  background: #f2f2f2;
   min-height: calc(100vh - 52px);
   min-width: 675px;
 }

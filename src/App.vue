@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <nav class="navbar" role="navigation" aria-label="main navigation">
+    <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <router-link to="/" class="navbar-item lobster is-size-3">
           ANBLI
@@ -8,15 +8,15 @@
       </div>
       <div class="navbar-menu">
         <div class="navbar-start navbar-router">
-          <router-link class="navbar-item" to="/">
+          <router-link class="navbar-item" :class="{ 'is-active' : $route.name === 'home' }" to="/">
             Home
           </router-link>
-          <router-link class="navbar-item" :class="{ 'router-link-exact-active' : $route.name === 'bracket' }" to="/brackets">
+          <router-link class="navbar-item" :class="{ 'is-active' : $route.name === 'bracket' }" to="/brackets">
             Brackets
           </router-link>
         </div>
         <div class="navbar-end navbar-router">
-          <router-link class="navbar-item" to="/about">
+          <router-link class="navbar-item" :class="{ 'is-active' : $route.name === 'about' }" to="/about">
             About
           </router-link>
         </div>
@@ -35,14 +35,5 @@
 }
 .lobster {
   font-family: 'Lobster', cursive;
-}
-
-.navbar-router a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-.navbar-router a.router-link-exact-active {
-  color: #42b983;
 }
 </style>
