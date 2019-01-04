@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div>
     <img alt="Ain't No Bracket Like It logo" src="../assets/ANBLI-WITH-WORDS.png">
     <div>
       <div>
