@@ -11,23 +11,17 @@
         Region
       </div>
     </div>
-    <div class='top-team'>
-      <div class='team-rank'>
-        {{topTeam.rank}}
-      </div>
+    <div class='top-team' :class="{'winner':topWinner}">
       <div class='team-name'>
-        {{topTeam.name}}
+        {{topTeam.rank}} {{topTeam.short_name}}
       </div>
       <div class='team-score'>
         {{topTeam.score}}
       </div>
     </div>
-    <div class='bottom-team'>
-      <div class='team-rank'>
-        {{bottomTeam.rank}}
-      </div>
+    <div class='bottom-team' :class="{'winner':bottomWinner}">
       <div class='team-name'>
-        {{bottomTeam.name}}
+        {{bottomTeam.rank}} {{bottomTeam.short_name}}
       </div>
       <div class='team-score'>
         {{bottomTeam.score}}
@@ -40,6 +34,7 @@
 /* game = {
   top_tournament_team: {
     team: {
+      short_name: String!
       name: String!
     },
     rank: int!
@@ -47,6 +42,7 @@
   top_team_score: int?,
   bottom_tournament_team: {
     team: {
+      short_name: String!
       name: String!
     },
     rank: int!
@@ -71,6 +67,7 @@ export default {
       return {
         score: this.game.top_team_score,
         rank: this.game.top_tournament_team && this.game.top_tournament_team.rank,
+        short_name: this.game.top_tournament_team && this.game.top_tournament_team.team && this.game.top_tournament_team.team.short_name,
         name: this.game.top_tournament_team && this.game.top_tournament_team.team && this.game.top_tournament_team.team.name,
       }
     },
@@ -78,8 +75,15 @@ export default {
       return {
         score: this.game.bottom_team_score,
         rank: this.game.bottom_tournament_team && this.game.bottom_tournament_team.rank,
+        short_name: this.game.bottom_tournament_team && this.game.bottom_tournament_team.team && this.game.bottom_tournament_team.team.short_name,
         name: this.game.bottom_tournament_team && this.game.bottom_tournament_team.team && this.game.bottom_tournament_team.team.name,
       }
+    },
+    topWinner() {
+      return this.game.winner === 'top'
+    },
+    bottomWinner() {
+      return this.game.winner === 'bottom'
     },
     winner() {
       return this.game.winner
@@ -96,9 +100,9 @@ export default {
   border: 1px black solid;
   display: grid;
   // grid-template-columns: auto;
-  grid-template-rows: 20px 40px 40px;
+  grid-template-rows: 25px 30px 30px;
   background: #ffffff;
-  width: 150px;
+  width: 160px;
   .top-bar {
     padding: 2px;
     display: flex;
@@ -109,10 +113,14 @@ export default {
   }
   .bottom-team, .top-team {
     display: grid;
-    grid-template-columns: 20px auto 30px;
+    grid-template-columns: auto 30px;
     div {
+      white-space: nowrap;
       align-self: center;
     }
+  }
+  .winner {
+    font-weight: bold;
   }
 }
 </style>

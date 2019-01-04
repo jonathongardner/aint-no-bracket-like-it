@@ -1,24 +1,56 @@
 <template>
   <div class='region' :class="[reverse ? 'region-right' : 'region-left', bottom ? 'region-bottom' : 'region-top']">
-    <template v-for='(round, index) in rounds'>
-      <round :title="index | roundText" :matchUps='round'/>
-    </template>
+    <div class='round'>
+      <div v-if='!bottom' class='round-header'>
+        Round 1
+      </div>
+      <div class='match-ups'>
+        <slot name='round1'/>
+      </div>
+      <div v-if='bottom' class='round-header'>
+        Round 1
+      </div>
+    </div>
+    <div class='round'>
+      <div v-if='!bottom' class='round-header'>
+        Round 2
+      </div>
+      <div class='match-ups'>
+        <slot name='round2'/>
+      </div>
+      <div v-if='bottom' class='round-header'>
+        Round 2
+      </div>
+    </div>
+    <div class='round'>
+      <div v-if='!bottom' class='round-header'>
+        Round 3
+      </div>
+      <div class='match-ups'>
+        <slot name='round3'/>
+      </div>
+      <div v-if='bottom' class='round-header'>
+        Round 3
+      </div>
+    </div>
+    <div class='round'>
+      <div v-if='!bottom' class='round-header'>
+        Round 4
+      </div>
+      <div class='match-ups'>
+        <slot name='round4'/>
+      </div>
+      <div v-if='bottom' class='round-header'>
+        Round 4
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import Round from './round.vue'
-
 export default {
   name: 'Region',
-  components: {
-    Round,
-  },
   props: {
-    rounds: {
-      type: Array,
-      required: true
-    },
     reverse: {
       type: Boolean,
       required: false,
@@ -29,26 +61,14 @@ export default {
       required: false,
       default: false,
     },
-    region: {
-      type: String,
-      required: true,
-    }
-  },
-  filters: {
-    roundText(index, showRounds) {
-      return 'Round ' + (index + 1)
-    }
   }
 }
 </script>
 
 <style scoped lang="scss">
 .region {
-  .round1-match-ups {
-    height: calc(8 * 90px);
-  }
   display: flex;
-  justify-content: flex-start; //space-between;
+  justify-content: space-between; //flex-start;
   flex-wrap: wrap;
 }
 .region-top {
@@ -62,5 +82,16 @@ export default {
 }
 .region-right {
   flex-direction: row-reverse;
+}
+.round-header {
+  font-size: 20px;
+  text-align: center;
+}
+.match-ups {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  height: calc(100% - 30px);
 }
 </style>
