@@ -1,6 +1,6 @@
 <template>
-  <div class="match-up">
-    <div class='top-bar'>
+  <match-up-template :topWinner='topWinner' :bottomWinner='bottomWinner'>
+    <template slot='top-bar'>
       <div>
         Date
       </div>
@@ -10,24 +10,20 @@
       <div>
         Region
       </div>
-    </div>
-    <div class='top-team' :class="{'winner':topWinner}">
-      <div class='team-name'>
+    </template>
+    <template slot='top-team-name'>
         {{topTeam.rank}} {{topTeam.short_name}}
-      </div>
-      <div class='team-score'>
+    </template>
+    <template slot='top-team-score'>
         {{topTeam.score}}
-      </div>
-    </div>
-    <div class='bottom-team' :class="{'winner':bottomWinner}">
-      <div class='team-name'>
-        {{bottomTeam.rank}} {{bottomTeam.short_name}}
-      </div>
-      <div class='team-score'>
-        {{bottomTeam.score}}
-      </div>
-    </div>
-  </div>
+    </template>
+    <template slot='bottom-team-name'>
+      {{bottomTeam.rank}} {{bottomTeam.short_name}}
+    </template>
+    <template slot='bottom-team-score'>
+      {{bottomTeam.score}}
+    </template>
+  </match-up-template>
 </template>
 
 <script>
@@ -50,8 +46,13 @@
   bottom_team_score: int?
   winner: top|bottom|null
 }*/
+import MatchUpTemplate from '@/components/bracket/match-up-template.vue'
+
 export default {
   name: 'MatchUp',
+  components: {
+    MatchUpTemplate,
+  },
   props: {
     game: {
       type: Object,
@@ -93,34 +94,4 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.match-up {
-  font-size: 12px;
-  text-align: center;
-  margin: 5px;
-  border: 1px black solid;
-  display: grid;
-  // grid-template-columns: auto;
-  grid-template-rows: 25px 30px 30px;
-  background: #ffffff;
-  width: 160px;
-  .top-bar {
-    padding: 2px;
-    display: flex;
-    flex: row;
-    justify-content: space-between;
-    flex-wrap: no-wrap;
-    border-bottom: 1px black solid;
-  }
-  .bottom-team, .top-team {
-    display: grid;
-    grid-template-columns: auto 30px;
-    div {
-      white-space: nowrap;
-      align-self: center;
-    }
-  }
-  .winner {
-    font-weight: bold;
-  }
-}
 </style>

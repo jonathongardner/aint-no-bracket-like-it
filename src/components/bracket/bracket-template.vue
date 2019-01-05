@@ -3,107 +3,233 @@
     <div class='tournament'>
       <region>
         <template slot='round1'>
-          <slot name='game1'/>
-          <slot name='game2'/>
-          <slot name='game3'/>
-          <slot name='game4'/>
-          <slot name='game5'/>
-          <slot name='game6'/>
-          <slot name='game7'/>
-          <slot name='game8'/>
+          <slot name='game1'>
+            <match-up-template/>
+          </slot>
+          <slot name='game2'>
+            <match-up-template/>
+          </slot>
+          <slot name='game3'>
+            <match-up-template/>
+          </slot>
+          <slot name='game4'>
+            <match-up-template/>
+          </slot>
+          <slot name='game5'>
+            <match-up-template/>
+          </slot>
+          <slot name='game6'>
+            <match-up-template/>
+          </slot>
+          <slot name='game7'>
+            <match-up-template/>
+          </slot>
+          <slot name='game8'>
+            <match-up-template/>
+          </slot>
         </template>
         <template slot='round2'>
-          <slot name='game33'/>
-          <slot name='game34'/>
-          <slot name='game35'/>
-          <slot name='game36'/>
+          <slot name='game33'>
+            <match-up-template/>
+          </slot>
+          <slot name='game34'>
+            <match-up-template/>
+          </slot>
+          <slot name='game35'>
+            <match-up-template/>
+          </slot>
+          <slot name='game36'>
+            <match-up-template/>
+          </slot>
         </template>
         <template slot='round3'>
-          <slot name='game49'/>
-          <slot name='game50'/>
+          <slot name='game49'>
+            <match-up-template/>
+          </slot>
+          <slot name='game50'>
+            <match-up-template/>
+          </slot>
         </template>
         <template slot='round4'>
-          <slot name='game57'/>
+          <slot name='game57'>
+            <match-up-template/>
+          </slot>
         </template>
       </region>
       <region :reverse='true'>
         <template slot='round1'>
-          <slot name='game32'/>
-          <slot name='game31'/>
-          <slot name='game30'/>
-          <slot name='game29'/>
-          <slot name='game28'/>
-          <slot name='game27'/>
-          <slot name='game26'/>
-          <slot name='game25'/>
+          <slot name='game32'>
+            <match-up-template/>
+          </slot>
+          <slot name='game31'>
+            <match-up-template/>
+          </slot>
+          <slot name='game30'>
+            <match-up-template/>
+          </slot>
+          <slot name='game29'>
+            <match-up-template/>
+          </slot>
+          <slot name='game28'>
+            <match-up-template/>
+          </slot>
+          <slot name='game27'>
+            <match-up-template/>
+          </slot>
+          <slot name='game26'>
+            <match-up-template/>
+          </slot>
+          <slot name='game25'>
+            <match-up-template/>
+          </slot>
         </template>
         <template slot='round2'>
-          <slot name='game48'/>
-          <slot name='game47'/>
-          <slot name='game46'/>
-          <slot name='game45'/>
+          <slot name='game48'>
+            <match-up-template/>
+          </slot>
+          <slot name='game47'>
+            <match-up-template/>
+          </slot>
+          <slot name='game46'>
+            <match-up-template/>
+          </slot>
+          <slot name='game45'>
+            <match-up-template/>
+          </slot>
         </template>
         <template slot='round3'>
-          <slot name='game56'/>
-          <slot name='game55'/>
+          <slot name='game56'>
+            <match-up-template/>
+          </slot>
+          <slot name='game55'>
+            <match-up-template/>
+          </slot>
         </template>
         <template slot='round4'>
-          <slot name='game60'/>
+          <slot name='game60'>
+            <match-up-template/>
+          </slot>
         </template>
       </region>
       <championship>
-        <slot slot="regionGameI" name='game61'/>
-        <slot slot="championship" name='game63'/>
-        <slot slot="regionGameII" name='game62'/>
+        <slot slot="regionGameI" name='game61'>
+          <match-up-template/>
+        </slot>
+        <slot slot="championship" name='game63'>
+          <match-up-template/>
+        </slot>
+        <slot slot="regionGameII" name='game62'>
+          <match-up-template/>
+        </slot>
       </championship>
       <region :bottom='true'>
         <template slot='round1'>
-          <slot name='game9'/>
-          <slot name='game10'/>
-          <slot name='game11'/>
-          <slot name='game12'/>
-          <slot name='game13'/>
-          <slot name='game14'/>
-          <slot name='game15'/>
-          <slot name='game16'/>
+          <slot name='game9'>
+            <match-up-template/>
+          </slot>
+          <slot name='game10'>
+            <match-up-template/>
+          </slot>
+          <slot name='game11'>
+            <match-up-template/>
+          </slot>
+          <slot name='game12'>
+            <match-up-template/>
+          </slot>
+          <slot name='game13'>
+            <match-up-template/>
+          </slot>
+          <slot name='game14'>
+            <match-up-template/>
+          </slot>
+          <slot name='game15'>
+            <match-up-template/>
+          </slot>
+          <slot name='game16'>
+            <match-up-template/>
+          </slot>
         </template>
         <template slot='round2'>
-          <slot name='game37'/>
-          <slot name='game38'/>
-          <slot name='game39'/>
-          <slot name='game40'/>
+          <slot name='game37'>
+            <match-up-template/>
+          </slot>
+          <slot name='game38'>
+            <match-up-template/>
+          </slot>
+          <slot name='game39'>
+            <match-up-template/>
+          </slot>
+          <slot name='game40'>
+            <match-up-template/>
+          </slot>
         </template>
         <template slot='round3'>
-          <slot name='game51'/>
-          <slot name='game52'/>
+          <slot name='game51'>
+            <match-up-template/>
+          </slot>
+          <slot name='game52'>
+            <match-up-template/>
+          </slot>
         </template>
         <template slot='round4'>
-          <slot name='game58'/>
+          <slot name='game58'>
+            <match-up-template/>
+          </slot>
         </template>
       </region>
       <region :bottom='true' :reverse='true'>
         <template slot='round1'>
-          <slot name='game24'/>
-          <slot name='game23'/>
-          <slot name='game22'/>
-          <slot name='game21'/>
-          <slot name='game20'/>
-          <slot name='game19'/>
-          <slot name='game18'/>
-          <slot name='game17'/>
+          <slot name='game24'>
+            <match-up-template/>
+          </slot>
+          <slot name='game23'>
+            <match-up-template/>
+          </slot>
+          <slot name='game22'>
+            <match-up-template/>
+          </slot>
+          <slot name='game21'>
+            <match-up-template/>
+          </slot>
+          <slot name='game20'>
+            <match-up-template/>
+          </slot>
+          <slot name='game19'>
+            <match-up-template/>
+          </slot>
+          <slot name='game18'>
+            <match-up-template/>
+          </slot>
+          <slot name='game17'>
+            <match-up-template/>
+          </slot>
         </template>
         <template slot='round2'>
-          <slot name='game44'/>
-          <slot name='game43'/>
-          <slot name='game42'/>
-          <slot name='game41'/>
+          <slot name='game44'>
+            <match-up-template/>
+          </slot>
+          <slot name='game43'>
+            <match-up-template/>
+          </slot>
+          <slot name='game42'>
+            <match-up-template/>
+          </slot>
+          <slot name='game41'>
+            <match-up-template/>
+          </slot>
         </template>
         <template slot='round3'>
-          <slot name='game54'/>
-          <slot name='game53'/>
+          <slot name='game54'>
+            <match-up-template/>
+          </slot>
+          <slot name='game53'>
+            <match-up-template/>
+          </slot>
         </template>
         <template slot='round4'>
-          <slot name='game59'/>
+          <slot name='game59'>
+            <match-up-template/>
+          </slot>
         </template>
       </region>
     </div>
@@ -111,14 +237,16 @@
 </template>
 
 <script>
+import MatchUpTemplate from '@/components/bracket/match-up-template.vue'
 import Region from '@/components/bracket/region.vue'
 import Championship from '@/components/bracket/championship.vue'
 
 export default {
   name: 'BracketTemplate',
   components: {
-    Championship,
+    MatchUpTemplate,
     Region,
+    Championship,
   },
 }
 </script>
