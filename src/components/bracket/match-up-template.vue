@@ -4,40 +4,13 @@
     <div class='top-bar'>
       <slot name='top-bar'/>
     </div>
-    <div class='top-team' :class="{'winner':topWinner}">
-      <div class='team-name'>
-        <slot name='top-team-name'/>
-      </div>
-      <div class='team-score'>
-        <slot name='top-team-score'/>
-      </div>
-    </div>
-    <div class='bottom-team' :class="{'winner':bottomWinner}">
-      <div class='team-name'>
-        <slot name='bottom-team-name'/>
-      </div>
-      <div class='team-score'>
-        <slot name='bottom-team-score'/>
-      </div>
-    </div>
+    <slot name='teams'/>
   </div>
 </template>
 
 <script>
 export default {
   name: 'MatchUpTemplate',
-  props: {
-    topWinner: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-    bottomWinner: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-  },
 }
 </script>
 
@@ -60,7 +33,7 @@ export default {
     flex-wrap: no-wrap;
     border-bottom: 1px black solid;
   }
-  .bottom-team, .top-team {
+  .team {
     display: grid;
     grid-template-columns: auto 30px;
     div {

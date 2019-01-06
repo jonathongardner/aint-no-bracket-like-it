@@ -12,22 +12,26 @@
       </div>
     </template>
     <template slot='teams'>
-      <div class='team' :class="{'winner':topWinner}">
-        <div>
-          {{topTeam.rank}} {{topTeam.shortName}}
-        </div>
-        <div>
-          {{topTeam.score}}
-        </div>
-      </div>
-      <div class='team' :class="{'winner':bottomWinner}">
-        <div>
-          {{bottomTeam.rank}} {{bottomTeam.shortName}}
-        </div>
-        <div>
-          {{bottomTeam.score}}
-        </div>
-      </div>
+      <label class='team' :class="{'winner':topWinner}">
+        <template v-if="topTeam.hasOwnProperty('rank')">
+          <div>
+            {{topTeam.rank}} {{topTeam.shortName}}
+          </div>
+          <div>
+            <input type="radio" value='top' v-model="winner">
+          </div>
+        </template>
+      </label>
+      <label class='team' :class="{'winner':bottomWinner}">
+        <template v-if="bottomTeam.hasOwnProperty('rank')">
+          <div>
+            {{bottomTeam.rank}} {{bottomTeam.shortName}}
+          </div>
+          <div>
+            <input type="radio" value='bottom' v-model="winner">
+          </div>
+        </template>
+      </label>
     </template>
   </match-up-template>
 </template>
@@ -55,11 +59,15 @@
 import MatchUpTemplate from '@/components/bracket/match-up-template.vue'
 
 export default {
-  name: 'match-up',
+  name: 'edit-match-up',
   components: {
     MatchUpTemplate,
   },
   props: {
+    value: {
+      type: String,
+      required: true,
+    },
     game: {
       type: Object,
       required: false,
@@ -69,6 +77,11 @@ export default {
       }
     },
   },
+  data() {
+    return {
+      winner: this.value,
+    }
+  },
   computed: {
     topTeam() {
       return this.game.top || {}
@@ -77,13 +90,15 @@ export default {
       return this.game.bottom || {}
     },
     topWinner() {
-      return this.game.winner === 'top'
+      return this.winner === 'top'
     },
     bottomWinner() {
-      return this.game.winner === 'bottom'
+      return this.winner === 'bottom'
     },
+  },
+  watch: {
     winner() {
-      return this.game.winner
+      this.$emit('input', this.winner)
     }
   }
 }

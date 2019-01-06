@@ -9,6 +9,11 @@ const bracketApi = {
     return baxios.get('/brackets/' + year).then(response => {
       return response.data
     })
+  },
+  getInitialBracket (year) {
+    return baxios.get('/brackets/' + year + '/initial').then(response => {
+      return response.data
+    })
   }
 }
 export {bracketApi}

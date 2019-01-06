@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HomePage from './views/HomePage.vue'
 import BracketPage from './views/BracketPage.vue'
+import CreateBracketPage from './views/CreateBracketPage.vue'
 import NotFoundPage from './views/NotFoundPage.vue'
 import bracketOptions from '@/helpers/bracketOptions.js'
 
@@ -24,12 +25,17 @@ export default new Router({
     },
     {
       path: '/brackets',
-      redirect: '/brackets/2017'
+      redirect: '/brackets/' + bracketOptions.lastYear
     },
     {
       path: '/brackets/:year',
       name: 'bracket',
       component: BracketPage
+    },
+    {
+      path: '/create-bracket',
+      name: 'create-bracket',
+      component: CreateBracketPage
     },
     {
       path: '*',

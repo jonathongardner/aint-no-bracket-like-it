@@ -14,6 +14,9 @@
           <router-link class="navbar-item" :class="{ 'is-active' : $route.name === 'bracket' }" to="/brackets">
             Brackets
           </router-link>
+          <router-link class="navbar-item" :class="{ 'is-active' : $route.name === 'create-bracket' }" to="/create-bracket">
+            Create Brackets
+          </router-link>
         </div>
         <div class="navbar-end navbar-router">
           <router-link class="navbar-item" :class="{ 'is-active' : $route.name === 'about' }" to="/about">

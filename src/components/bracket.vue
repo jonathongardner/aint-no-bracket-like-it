@@ -7,7 +7,7 @@ so data doesnt have to keep propagating up
     <slot />
     <bracket-template>
       <template v-for="(game, gameNumber) in games">
-        <match-up :slot="'game' + gameNumber" :game='game'/>
+        <match-up :slot="'game' + gameNumber" :game='game' :key='gameNumber'/>
       </template>
     </bracket-template>
   </div>

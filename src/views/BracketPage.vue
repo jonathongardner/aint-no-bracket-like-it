@@ -1,16 +1,16 @@
+<!-- Use slots so year picker has same background color -->
 <template>
   <div id='bracket-page'>
-    <div v-if='toEarly' class='subtitle has-text-centered'>
-      Sorry... I can't rembember that far back. Here's {{ yearToShow }}.
-    </div>
-    <div v-else-if='toLate' class='subtitle has-text-centered'>
-      Woah!!!! You trying to get me to tell you the future... I don't think so. Here's {{ yearToShow }}.
-    </div>
     <bracket :games='games'>
+      <div v-if='toEarly' class='subtitle has-text-centered'>
+        Sorry... I can't rembember that far back. Here's {{ yearToShow }}.
+      </div>
+      <div v-else-if='toLate' class='subtitle has-text-centered'>
+        Woah!!!! You trying to get me to tell you the future... I don't think so. Here's {{ yearToShow }}.
+      </div>
       <year-picker class="has-text-centered" :year='yearToShow' @change='getBracket'></year-picker>
     </bracket>
   </div>
-  <!-- class="subtitle is-3 has-text-centered" -->
 </template>
 
 <script>
@@ -31,7 +31,7 @@ export default {
     }
   },
   watch: {
-    '$route.params.year'() {
+    yearToShow() {
       this.getBracket()
     }
   },
