@@ -237,9 +237,9 @@
 </template>
 
 <script>
-import MatchUpTemplate from '@/components/bracket/match-up-template.vue'
-import Region from '@/components/bracket/region.vue'
-import Championship from '@/components/bracket/championship.vue'
+import MatchUpTemplate from '@/components/bracket/templates/match-up-template.vue'
+import Region from '@/components/bracket/templates/region.vue'
+import Championship from '@/components/bracket/templates/championship.vue'
 
 export default {
   name: 'BracketTemplate',

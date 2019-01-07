@@ -1,5 +1,5 @@
 <template>
-  <match-up-template>
+  <match-up-template @click="$emit('click')">
     <template slot='top-bar'>
       <div>
         Date
@@ -52,7 +52,7 @@
   bottom_team_score: int?
   winner: top|bottom|null
 }*/
-import MatchUpTemplate from '@/components/bracket/match-up-template.vue'
+import MatchUpTemplate from '@/components/bracket/templates/match-up-template.vue'
 
 export default {
   name: 'match-up',

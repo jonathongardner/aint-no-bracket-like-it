@@ -14,6 +14,11 @@ const bracketApi = {
     return baxios.get('/brackets/' + year + '/initial').then(response => {
       return response.data
     })
+  },
+  getBracketGameStats (gameNumber) {
+    return baxios.get('/brackets/stats/' + gameNumber).then(response => {
+      return response.data
+    })
   }
 }
 export {bracketApi}

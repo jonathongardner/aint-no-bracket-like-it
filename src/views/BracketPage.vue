@@ -1,7 +1,7 @@
 <!-- Use slots so year picker has same background color -->
 <template>
   <div id='bracket-page'>
-    <bracket :games='games'>
+    <bracket :games='games' :year='yearToShow'>
       <div v-if='toEarly' class='subtitle has-text-centered'>
         Sorry... I can't rembember that far back. Here's {{ yearToShow }}.
       </div>

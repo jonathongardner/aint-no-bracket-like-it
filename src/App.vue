@@ -6,7 +6,7 @@
           ANBLI
         </router-link>
       </div>
-      <div class="navbar-menu">
+      <div id='anbli-navbar' class="navbar-menu">
         <div class="navbar-start navbar-router">
           <router-link class="navbar-item" :class="{ 'is-active' : $route.name === 'home' }" to="/">
             Home

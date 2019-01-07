@@ -6,22 +6,24 @@ so data doesnt have to keep propagating up
   <div class='is-light'>
     <slot />
     <bracket-template>
-      <template v-for="(game, gameNumber) in games">
-        <match-up :slot="'game' + gameNumber" :game='game' :key='gameNumber'/>
-      </template>
+      <match-up v-for="(game, gameNumber) in games" :slot="'game' + gameNumber" :key='gameNumber'
+        @click='gameClicked(gameNumber)' class='can-click' :game='game' />
     </bracket-template>
+    <bracket-stats-modal v-model='showModal' :gameNumber='gameNumber' :year='year'/>
   </div>
 </template>
 
 <script>
+import BracketTemplate from '@/components/bracket/templates/bracket-template.vue'
 import MatchUp from '@/components/bracket/match-up.vue'
-import BracketTemplate from '@/components/bracket/bracket-template.vue'
+import BracketStatsModal from '@/components/bracket/bracket-stats-modal.vue'
 
 export default {
   name: 'bracket',
   components: {
     BracketTemplate,
     MatchUp,
+    BracketStatsModal,
   },
   props: {
     games: {
@@ -31,12 +33,32 @@ export default {
         return {}
       }
     },
+    year: {
+      type: Number,
+      required: false,
+      default: -1,
+    }
   },
+  data() {
+    return {
+      gameNumber: 1,
+      showModal: false,
+    }
+  },
+  methods: {
+    gameClicked(gameNumber) {
+      this.gameNumber = parseInt(gameNumber, 10)
+      this.showModal = true
+    }
+  }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.can-click {
+  cursor: pointer;
+}
 // .bracket {
 //   background: #f2f2f2;
 // }

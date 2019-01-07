@@ -1,6 +1,6 @@
 <!-- Use template so there can be an empty -->
 <template>
-  <div class="match-up">
+  <div class="match-up" @click="$emit('click')">
     <div class='top-bar'>
       <slot name='top-bar'/>
     </div>

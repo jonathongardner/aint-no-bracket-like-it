@@ -16,7 +16,7 @@ so data doesnt have to keep propagating up
 
 <script>
 import EditMatchUp from '@/components/bracket/edit-match-up.vue'
-import BracketTemplate from '@/components/bracket/bracket-template.vue'
+import BracketTemplate from '@/components/bracket/templates/bracket-template.vue'
 
 export default {
   name: 'edit-bracket',
