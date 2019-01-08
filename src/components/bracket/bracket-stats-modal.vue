@@ -20,7 +20,9 @@
             <div>
               All Games:
             </div>
-            <match-up v-for="(game, y) in gameStats.allGames" :game='game' :key="y" :class="{'current-year': year === parseInt(y, 10)}"/>
+            <div class='all-games'>
+              <match-up v-for="(game, y) in gameStats.allGames" :game='game' :key="y" :class="{'current-year': year === parseInt(y, 10)}"/>
+            </div>
           </div>
       </section>
       <footer class="modal-card-foot">
@@ -48,9 +50,10 @@ export default {
       required: false,
       default: -1,
     },
-    value: {
+    value: { // Do require value so a v-if can be used with modal
       type: Boolean,
       required: false,
+      default: true,
     },
   },
   data() {
@@ -103,5 +106,9 @@ export default {
 .current-year {
   // TODO Think about how to show current year in games
   // border-color: #440000;
+}
+.all-games {
+  display: flex;
+  flex-wrap: wrap;
 }
 </style>

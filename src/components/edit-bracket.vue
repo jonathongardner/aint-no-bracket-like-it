@@ -8,21 +8,26 @@ so data doesnt have to keep propagating up
     <bracket-template>
       <template v-for="(game, gameNumber) in games">
         <edit-match-up :slot="'game' + gameNumber" :game='game' :key='gameNumber'
-          :value='getWinnerOfGame(gameNumber)' @input='updateWinnerOfGame(gameNumber, $event)'/>
+          :value='getWinnerOfGame(gameNumber)' @input='updateWinnerOfGame(gameNumber, $event)'
+          @click='gameClicked(gameNumber)' class='can-click'/>
       </template>
     </bracket-template>
+    <!-- Use v-if so modal resets after close -->
+    <bracket-stats-modal v-if='showModal' :gameNumber='gameNumber' @input='showModal = false'/>
   </div>
 </template>
 
 <script>
-import EditMatchUp from '@/components/bracket/edit-match-up.vue'
 import BracketTemplate from '@/components/bracket/templates/bracket-template.vue'
+import EditMatchUp from '@/components/bracket/edit-match-up.vue'
+import BracketStatsModal from '@/components/bracket/bracket-stats-modal.vue'
 
 export default {
   name: 'edit-bracket',
   components: {
-    EditMatchUp,
     BracketTemplate,
+    EditMatchUp,
+    BracketStatsModal,
   },
   props: {
     intialGames: {
@@ -69,6 +74,8 @@ export default {
         62: [60, 59],
         63: [61, 62],
       },
+      gameNumber: 1,
+      showModal: false,
     }
   },
   computed: {
@@ -94,6 +101,10 @@ export default {
       // Do gameNumber last so it overwrites the value in value
       this.$emit('input', Object.assign({}, this.value, {[gameNumber]: newValue}))
       // this.$set(this.winnerOfGame, gameNumber, newValue)
+    },
+    gameClicked(gameNumber) {
+      this.gameNumber = parseInt(gameNumber, 10)
+      this.showModal = true
     }
   }
 }
@@ -101,6 +112,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.can-click {
+  cursor: pointer;
+}
 // .bracket {
 //   background: #f2f2f2;
 // }

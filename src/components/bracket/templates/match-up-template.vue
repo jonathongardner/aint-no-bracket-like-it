@@ -1,7 +1,7 @@
 <!-- Use template so there can be an empty -->
 <template>
   <div class="match-up" @click="$emit('click')">
-    <div class='top-bar'>
+    <div class='top-bar' @click="$emit('top-bar-click')">
       <slot name='top-bar'/>
     </div>
     <slot name='teams'/>

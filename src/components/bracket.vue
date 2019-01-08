@@ -9,7 +9,8 @@ so data doesnt have to keep propagating up
       <match-up v-for="(game, gameNumber) in games" :slot="'game' + gameNumber" :key='gameNumber'
         @click='gameClicked(gameNumber)' class='can-click' :game='game' />
     </bracket-template>
-    <bracket-stats-modal v-model='showModal' :gameNumber='gameNumber' :year='year'/>
+    <!-- Use v-if so modal resets after close -->
+    <bracket-stats-modal v-if='showModal' :gameNumber='gameNumber' :year='year' @input='showModal = false'/>
   </div>
 </template>
 

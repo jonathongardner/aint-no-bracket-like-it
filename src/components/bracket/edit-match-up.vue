@@ -1,5 +1,5 @@
 <template>
-  <match-up-template>
+  <match-up-template @top-bar-click="$emit('click')">
     <template slot='top-bar'>
       <div>
         Date
