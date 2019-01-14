@@ -6,6 +6,7 @@ import BracketPage from './views/BracketPage.vue'
 import CreateBracketPage from './views/CreateBracketPage.vue'
 import NotFoundPage from './views/NotFoundPage.vue'
 import bracketOptions from '@/helpers/bracketOptions.js'
+import authentication from '@/helpers/authentication.js'
 
 Vue.use(Router)
 
@@ -56,12 +57,16 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if(to.matched.some(record => record.meta.requiresAuth)) {
-    if (!!store.state.jwt && store.state.exp > (new Date().getTime() / 1000) + 30) {
+    authentication.validToken(store).then(() => {
       next()
-    } else {
-      console.log(to.name)
+    }).catch(() => {
       next({name: 'login', params: {routedFrom: to.name}})
-    }
+    })
+    // if (authentication.validToken(store)) {
+    //   next()
+    // } else {
+    //   next({name: 'login', params: {routedFrom: to.name}})
+    // }
   } else {
     next()
   }

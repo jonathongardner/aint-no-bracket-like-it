@@ -22,7 +22,7 @@ const bracketApi = {
   }
 }
 const authenticationApi = {
-  authenticate (params) {
+  signIn (params) {
     return baxios.post('/auth/sign_in', params).then(response => {
       return response.data
     })

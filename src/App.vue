@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+    <nav class="navbar is-dark is-over-pageloader" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <router-link to="/" class="navbar-item lobster is-size-3">
           ANBLI
@@ -8,34 +8,82 @@
       </div>
       <div id='anbli-navbar' class="navbar-menu">
         <div class="navbar-start navbar-router">
-          <router-link class="navbar-item" :class="{ 'is-active' : $route.name === 'home' }" to="/">
+          <router-link class="navbar-item" :class="{ 'is-active' : isRoute('home', false) }" to="/">
             Home
           </router-link>
-          <router-link class="navbar-item" :class="{ 'is-active' : $route.name === 'bracket' }" to="/brackets">
+          <router-link class="navbar-item" :class="{ 'is-active' : isRoute('bracket', false) }" to="/brackets">
             Brackets
           </router-link>
-          <router-link class="navbar-item" :class="{ 'is-active' : $route.name === 'create-bracket' }" to="/create-bracket">
+          <router-link v-if='loggedIn' class="navbar-item" :class="{ 'is-active' : isRoute('create-bracket', true) }" to="/create-bracket">
             Create Brackets
           </router-link>
         </div>
         <div class="navbar-end navbar-router">
-          <router-link class="navbar-item" :class="{ 'is-active' : $route.name === 'about' }" to="/about">
+          <router-link class="navbar-item" :class="{ 'is-active' : isRoute('about', false) }" to="/about">
             About
           </router-link>
-          <div class="navbar-item">
-            <div class="buttons">
-              <router-link class="button is-light" to="/login">
-                Log in
-              </router-link>
+          <div class="navbar-item has-dropdown is-hoverable" v-if='loggedIn'>
+            <a class="navbar-link">
+              User
+            </a>
+
+            <div class="navbar-dropdown is-right is-dark">
+              <div class="navbar-item">
+                {{ username }}
+              </div>
+              <hr class="navbar-divider">
+              <a class="navbar-item" @click='signOut'>
+                Sign Out
+              </a>
+              <a class="navbar-item">
+                Other stuff
+              </a>
             </div>
           </div>
+          <router-link class="navbar-item" v-else to="/login">
+            Sign in
+          </router-link>
         </div>
       </div>
     </nav>
+    <loading :class="{'is-active': loading}" />
     <router-view/>
   </div>
 </template>
 
+<script>
+import { mapState } from 'vuex'
+import {LOGOUT} from '@/mutation-types'
+import Loading from '@/components/loading.vue'
+
+export default {
+  name: 'App',
+  components: { Loading },
+  computed: {
+    ...mapState(['username', 'loading']),
+    loggedIn() {
+      return !!this.username
+    },
+  },
+  // Using username means the user might show as logged in when they're not
+  // This would be when session is false and token is expired. This will be
+  // okay becasue when user clicks something that does require authenticated user
+  // it they will just ask them to log back in. If you use a method that depends on
+  // time (because a computed will not update) it will only change on page refresh
+  // because app will only update on refresh.
+  methods: {
+    signOut() {
+      this.$store.dispatch(LOGOUT).then(() => {
+        console.log('Logged out')
+      })
+    },
+    isRoute(name, needsAuth) {
+      return (this.$route.name === name) || (needsAuth && this.$route.params.routedFrom && this.$route.params.routedFrom === name)
+    }
+  }
+}
+
+</script>
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -45,5 +93,8 @@
 }
 .lobster {
   font-family: 'Lobster', cursive;
+}
+.is-over-pageloader {
+  z-index: 999999;
 }
 </style>

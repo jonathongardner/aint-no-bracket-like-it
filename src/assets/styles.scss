@@ -1,9 +1,11 @@
 @charset "utf-8";
 $light-green: #cff2cd;
+$pageloader-opacity: 0.75;
 // $navbar-background-color: $light-green;
 // $navbar-item-hover-background-color: #bbd1ba;
 // $navbar-item-hover-color:
 @import "./../../node_modules/bulma/bulma.sass";
+@import "./../../node_modules/bulma-pageloader/dist/css/bulma-pageloader.sass";
 // Import only what you need from Bulma
 // @import "./../../node_modules/bulma/sass/utilities/_all.sass";
 // @import "./../../node_modules/bulma/sass/base/_all.sass";
