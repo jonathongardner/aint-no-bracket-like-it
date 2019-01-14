@@ -22,6 +22,13 @@
           <router-link class="navbar-item" :class="{ 'is-active' : $route.name === 'about' }" to="/about">
             About
           </router-link>
+          <div class="navbar-item">
+            <div class="buttons">
+              <router-link class="button is-light" to="/login">
+                Log in
+              </router-link>
+            </div>
+          </div>
         </div>
       </div>
     </nav>
