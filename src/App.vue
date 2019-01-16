@@ -14,9 +14,23 @@
           <router-link class="navbar-item" :class="{ 'is-active' : isRoute('bracket', false) }" to="/brackets">
             Brackets
           </router-link>
-          <router-link v-if='loggedIn' class="navbar-item" :class="{ 'is-active' : isRoute('create-bracket', true) }" to="/create-bracket">
-            Create Brackets
-          </router-link>
+          <div class="navbar-item has-dropdown is-hoverable" v-if='loggedIn'>
+            <a class="navbar-link">
+              My Brackets
+            </a>
+            <div class="navbar-dropdown is-right is-dark">
+              <div class="navbar-item">
+                Unique
+              </div>
+              <router-link class="navbar-item" :class="{ 'is-active' : isRoute('saved-brackets', true) }" :to="{ name: 'saved-brackets'}">
+                Saved
+              </router-link>
+              <hr class="navbar-divider">
+              <router-link class="navbar-item" :class="{ 'is-active' : isRoute('create-bracket', true) }" :to="{ name: 'create-bracket'}">
+                Create
+              </router-link>
+            </div>
+          </div>
         </div>
         <div class="navbar-end navbar-router">
           <router-link class="navbar-item" :class="{ 'is-active' : isRoute('about', false) }" to="/about">
@@ -26,7 +40,6 @@
             <a class="navbar-link">
               User
             </a>
-
             <div class="navbar-dropdown is-right is-dark">
               <div class="navbar-item">
                 {{ username }}

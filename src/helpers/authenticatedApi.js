@@ -12,6 +12,28 @@ const abaxios = axios.create({
     }
   }
 })
+const saveBracketApi = {
+  saveBracket(params) {
+    return abaxios.post('/saved_brackets', {saved_bracket: params}).then(response => {
+      return response.data
+    })
+  },
+  updateBracket(id, params) {
+    return abaxios.patch('/saved_brackets/' + id, {saved_bracket: params}).then(response => {
+      return response.data
+    })
+  },
+  savedBrackets() {
+    return abaxios.get('/saved_brackets').then(response => {
+      return response.data
+    })
+  },
+  deleteBracket(id) {
+    return abaxios.delete('/saved_brackets/' + id).then(response => {
+      return response.data
+    })
+  },
+}
 
 const authenticationApi = {
   signOut () {
@@ -25,4 +47,4 @@ const authenticationApi = {
     })
   },
 }
-export {authenticationApi}
+export {authenticationApi, saveBracketApi}

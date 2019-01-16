@@ -3,7 +3,8 @@ import Router from 'vue-router'
 import store from './vuex'
 import HomePage from './views/HomePage.vue'
 import BracketPage from './views/BracketPage.vue'
-import CreateBracketPage from './views/CreateBracketPage.vue'
+import ManageBracketPage from './views/ManageBracketPage.vue'
+import SavedBracketsPage from './views/SavedBracketsPage.vue'
 import NotFoundPage from './views/NotFoundPage.vue'
 import bracketOptions from '@/helpers/bracketOptions.js'
 import authentication from '@/helpers/authentication.js'
@@ -32,9 +33,25 @@ const router = new Router({
       component: BracketPage
     },
     {
-      path: '/create-bracket',
+      path: '/my-brackets/new',
       name: 'create-bracket',
-      component: CreateBracketPage,
+      component: ManageBracketPage,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/my-brackets/:id',
+      name: 'edit-bracket',
+      component: ManageBracketPage,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/my-brackets',
+      name: 'saved-brackets',
+      component: SavedBracketsPage,
       meta: {
         requiresAuth: true
       }

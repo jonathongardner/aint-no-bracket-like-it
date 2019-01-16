@@ -74,7 +74,7 @@ export default {
         62: [60, 59],
         63: [61, 62],
       },
-      gameNumber: 1,
+      gameNumber: 1, // for modal
       showModal: false,
     }
   },
@@ -95,11 +95,11 @@ export default {
   },
   methods: {
     getWinnerOfGame(gameNumber) {
-      return this.value[gameNumber] || ''
+      return (this.value[gameNumber] && this.value[gameNumber].winner) || ''
     },
     updateWinnerOfGame(gameNumber, newValue) {
       // Do gameNumber last so it overwrites the value in value
-      this.$emit('input', Object.assign({}, this.value, {[gameNumber]: newValue}))
+      this.$emit('input', Object.assign({}, this.value, {[gameNumber]: {winner: newValue}}))
       // this.$set(this.winnerOfGame, gameNumber, newValue)
     },
     gameClicked(gameNumber) {

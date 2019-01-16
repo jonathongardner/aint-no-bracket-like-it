@@ -1,44 +1,41 @@
 <template>
-  <div class="modal" :class="{'is-active' : value}">
-    <div class="modal-background" @click='closeModal'></div>
-    <div class="modal-card">
-      <header class="modal-card-head">
-        <p class="modal-card-title">Game {{ gameNumber }}</p>
-        <button class="delete" aria-label="close" @click='closeModal'></button>
-      </header>
-      <section class="modal-card-body">
+  <my-modal :value='value' @input='closeModal'>
+    <template slot='header'>
+      <p class="modal-card-title">Game {{ gameNumber }}</p>
+      <button class="delete" aria-label="close" @click='closeModal'></button>
+    </template>
+    <template slot='section'>
+        <div>
+          Top Ranks: {{ commonTopRank }}
+        </div>
+        <div>
+          Bottom Ranks: {{ commonBottomRank }}
+        </div>
+        <div>
+          Match Up Ranks: {{ commonMatchUps }}
+        </div>
+        <div>
           <div>
-            Top Ranks: {{ commonTopRank }}
+            All Games:
           </div>
-          <div>
-            Bottom Ranks: {{ commonBottomRank }}
+          <div class='all-games'>
+            <match-up v-for="(game, y) in gameStats.allGames" :game='game' :key="y" :class="{'current-year': year === parseInt(y, 10)}"/>
           </div>
-          <div>
-            Match Up Ranks: {{ commonMatchUps }}
-          </div>
-          <div>
-            <div>
-              All Games:
-            </div>
-            <div class='all-games'>
-              <match-up v-for="(game, y) in gameStats.allGames" :game='game' :key="y" :class="{'current-year': year === parseInt(y, 10)}"/>
-            </div>
-          </div>
-      </section>
-      <footer class="modal-card-foot">
-      </footer>
-    </div>
-  </div>
+        </div>
+    </template>
+  </my-modal>
 </template>
 
 <script>
 import MatchUp from '@/components/bracket/match-up.vue'
+import MyModal from '@/components/my-modal.vue'
 import {bracketApi} from '@/helpers/api.js'
 
 export default {
   name: 'bracket-stats-modal',
   components: {
     MatchUp,
+    MyModal,
   },
   props: {
     gameNumber: {
