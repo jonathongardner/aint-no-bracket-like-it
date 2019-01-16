@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {authenticationApi as authenticationApi1} from '@/helpers/api.js'
-import {authenticationApi as authenticationApi2} from '@/helpers/authenticatedApi.js'
+import {authenticationApi} from '@/helpers/api.js'
 import * as moduleTypes from './mutation-types'
 
 Vue.use(Vuex)
@@ -15,15 +14,19 @@ export default new Vuex.Store({
     username: '',
     loading: false,
   },
-  // getters: {
+  getters: {
+    hasToken: (state) => {
+      return !!state.jwt
+    }
   // Cant use getter because as time changes it will not update
   // Use helper so its at least in on place
   //   validToken: (state) => {
   //     return !!state.jwt && state.exp > ((new Date().getTime() / 1000) + 30)
   //   }
-  // },
+  },
   mutations: {
-    [moduleTypes.LOGIN] (state, token) {
+    [moduleTypes.UPDATETOKEN] (state, authorization) {
+      const token = authorization.substring(13)
       const decoded = JSON.parse(atob(token.split('.')[1]))
       state.jwt = token
       state.exp = decoded.exp
@@ -48,19 +51,19 @@ export default new Vuex.Store({
   },
   actions: {
     [moduleTypes.LOGIN] ({commit}, params) {
-      return authenticationApi1.signIn(params).then((data) => {
-        commit(moduleTypes.LOGIN, data.token)
+      return authenticationApi.signIn(params).then((response) => {
+        commit(moduleTypes.UPDATETOKEN, response.headers.authorization)
       })
     },
     [moduleTypes.LOGOUT] ({commit}) {
       // TODO change this to log out api
-      return authenticationApi2.signOut().then(() => {
+      return authenticationApi.signOut().then(() => {
         commit(moduleTypes.LOGOUT)
       })
     },
     [moduleTypes.UPDATETOKEN] ({commit}) {
-      return authenticationApi2.updateToken().then((data) => {
-        commit(moduleTypes.LOGIN, data.token)
+      return authenticationApi.updateToken().then((response) => {
+        commit(moduleTypes.UPDATETOKEN, response.headers.authorization)
       })
     },
   }

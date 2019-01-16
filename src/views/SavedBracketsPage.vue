@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import {saveBracketApi} from '@/helpers/authenticatedApi.js'
+import {saveBracketApi} from '@/helpers/api.js'
 import MyModal from '@/components/my-modal.vue'
 
 export default {

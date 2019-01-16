@@ -6,9 +6,7 @@
         <p class="subtitle has-text-grey">Please login to proceed.</p>
         <div class="box">
           <form @submit.prevent="authenticate">
-            <div class="field" v-if='message'>
-              {{ message }}
-            </div>
+            <errors :responseError='responseError' defaultMessage='Could not login.' class="field" />
             <div class="field">
               <div class="control">
                 <input class="input is-large" type="login" placeholder="Your Email or Username" autofocus="" v-model='loginId'>
@@ -42,12 +40,16 @@
 <script>
 import { mapActions } from 'vuex'
 import { LOGIN } from '@/mutation-types'
+import Errors from '@/components/errors'
 
 export default {
   name: 'LoginPage',
+  components: {
+    Errors,
+  },
   data() {
     return {
-      message: null,
+      responseError: null,
       loginId: '',
       pword: '',
       rembemberMe: false,
@@ -61,20 +63,18 @@ export default {
   methods: {
     ...mapActions({login: LOGIN}),
     authenticate() {
-      this.message = null
+      this.responseError = null
       this.login({
         login: this.loginId,
         password: this.pword,
         session: this.rembemberMe,
       }).then(() => {
-        const routeTo = {name: this.$route.params.routedFrom || 'home'}
-        this.$router.push(routeTo)
-      }).catch(error => {
-        if (error.response) {
-          this.message = error.response.data.errors.authentication[0]
-        } else {
-          this.message = 'Could not login'
+        this.$toasted.show('Signed in!', {type : 'success', icon: 'check'})
+        if (this.$route.name === 'login') {
+          this.$router.push({name: 'home'})
         }
+      }).catch(error => {
+        this.responseError = error
       }).then(() => {
         this.pword = ''
         // this.$router.push('/')

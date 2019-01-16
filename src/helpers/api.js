@@ -1,8 +1,4 @@
-import axios from 'axios'
-
-const baxios = axios.create({
-  baseURL: '/api',
-})
+import baxios from './baxios.js'
 
 const bracketApi = {
   getBracket (year) {
@@ -21,11 +17,46 @@ const bracketApi = {
     })
   }
 }
-const authenticationApi = {
-  signIn (params) {
-    return baxios.post('/auth/sign_in', params).then(response => {
+
+const saveBracketApi = {
+  saveBracket(params) {
+    return baxios.post('/saved_brackets', {saved_bracket: params}).then(response => {
+      return response.data
+    })
+  },
+  updateBracket(id, params) {
+    return baxios.patch('/saved_brackets/' + id, {saved_bracket: params}).then(response => {
+      return response.data
+    })
+  },
+  savedBrackets() {
+    return baxios.get('/saved_brackets').then(response => {
+      return response.data
+    })
+  },
+  savedBracket(id) {
+    return baxios.get('/saved_brackets/' + id).then(response => {
+      return response.data
+    })
+  },
+  deleteBracket(id) {
+    return baxios.delete('/saved_brackets/' + id).then(response => {
       return response.data
     })
   },
 }
-export {bracketApi, authenticationApi}
+
+const authenticationApi = {
+  signIn (params) {
+    return baxios.post('/auth/sign_in', params)
+  },
+  signOut () {
+    return baxios.delete('/auth/sign_out').then(response => {
+      return response.data
+    })
+  },
+  updateToken () {
+    return baxios.get('/auth/update_session_token')
+  },
+}
+export {bracketApi, saveBracketApi, authenticationApi}

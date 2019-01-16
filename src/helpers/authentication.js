@@ -23,8 +23,6 @@ const authentication = {
           store.commit(LOGOUT)
           reject("Not logged in")
         }
-        // TODO Check if
-
       }
     });
   }

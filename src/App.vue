@@ -14,7 +14,7 @@
           <router-link class="navbar-item" :class="{ 'is-active' : isRoute('bracket', false) }" to="/brackets">
             Brackets
           </router-link>
-          <div class="navbar-item has-dropdown is-hoverable" v-if='loggedIn'>
+          <div class="navbar-item has-dropdown is-hoverable" v-if='hasToken'>
             <a class="navbar-link">
               My Brackets
             </a>
@@ -36,7 +36,7 @@
           <router-link class="navbar-item" :class="{ 'is-active' : isRoute('about', false) }" to="/about">
             About
           </router-link>
-          <div class="navbar-item has-dropdown is-hoverable" v-if='loggedIn'>
+          <div class="navbar-item has-dropdown is-hoverable" v-if='hasToken'>
             <a class="navbar-link">
               User
             </a>
@@ -60,22 +60,28 @@
       </div>
     </nav>
     <loading :class="{'is-active': loading}" />
-    <router-view/>
+    <login-page v-if='showLoginPage'/>
+    <router-view v-else/>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import {LOGOUT} from '@/mutation-types'
 import Loading from '@/components/loading.vue'
+import LoginPage from '@/views/LoginPage.vue'
 
 export default {
   name: 'App',
-  components: { Loading },
+  components: {
+    Loading,
+    LoginPage
+  },
   computed: {
     ...mapState(['username', 'loading']),
-    loggedIn() {
-      return !!this.username
+    ...mapGetters(['hasToken']),
+    showLoginPage() {
+      return !this.hasToken && this.$route.meta.requiresAuth
     },
   },
   // Using username means the user might show as logged in when they're not
@@ -87,11 +93,11 @@ export default {
   methods: {
     signOut() {
       this.$store.dispatch(LOGOUT).then(() => {
-        console.log('Logged out')
+        this.$toasted.show('Signed out!', {type : 'success', icon: 'check'})
       })
     },
-    isRoute(name, needsAuth) {
-      return (this.$route.name === name) || (needsAuth && this.$route.params.routedFrom && this.$route.params.routedFrom === name)
+    isRoute(name) {
+      return (this.$route.name === name)
     }
   }
 }
