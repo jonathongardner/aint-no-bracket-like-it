@@ -22,8 +22,8 @@
                 <input type="checkbox" v-model='rembemberMe'> Remember me
               </label>
             </div>
-            <button type="submit" class="button is-block is-info is-large is-fullwidth"
-              :class="{'is-disabled':dontSubmit}" :disabled='dontSubmit'>
+            <button id='submitButton' type="submit" class="button is-block is-info is-large is-fullwidth"
+              :class="{'is-disabled': dontSubmit}" :disabled='dontSubmit'>
               Login
             </button>
           </form>

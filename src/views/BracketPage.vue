@@ -8,7 +8,7 @@
       <div v-else-if='toLate' class='subtitle has-text-centered'>
         Woah!!!! You trying to get me to tell you the future... I don't think so. Here's {{ yearToShow }}.
       </div>
-      <year-picker class="has-text-centered" :year='yearToShow' @change='getBracket'></year-picker>
+      <year-picker class="has-text-centered" :year='yearToShow'></year-picker>
     </bracket>
   </div>
 </template>

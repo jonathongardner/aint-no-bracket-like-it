@@ -19,7 +19,7 @@ const bracketApi = {
 }
 
 const saveBracketApi = {
-  saveBracket(params) {
+  createBracket(params) {
     return baxios.post('/saved_brackets', {saved_bracket: params}).then(response => {
       return response.data
     })

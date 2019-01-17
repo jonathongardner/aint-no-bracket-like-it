@@ -56,7 +56,7 @@ export default {
           games: this.winnerOfGames,
         })
       }
-      return saveBracketApi.saveBracket({
+      return saveBracketApi.createBracket({
         name: this.name,
         games: this.winnerOfGames,
       })
