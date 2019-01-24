@@ -18,6 +18,14 @@ const bracketApi = {
   }
 }
 
+const uniqueBracketApi = {
+  getGameAvailability (games) {
+    return baxios.post('/unique_brackets/available', {games: games}).then(response => {
+      return response.data
+    })
+  },
+}
+
 const saveBracketApi = {
   createBracket(params) {
     return baxios.post('/saved_brackets', {saved_bracket: params}).then(response => {
@@ -59,4 +67,4 @@ const authenticationApi = {
     return baxios.get('/auth/update_session_token')
   },
 }
-export {bracketApi, saveBracketApi, authenticationApi}
+export {bracketApi, uniqueBracketApi, saveBracketApi, authenticationApi}

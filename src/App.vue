@@ -19,9 +19,6 @@
               My Brackets
             </a>
             <div class="navbar-dropdown is-right is-dark">
-              <div class="navbar-item">
-                Unique
-              </div>
               <router-link class="navbar-item" :class="{ 'is-active' : isRoute('saved-brackets', true) }" :to="{ name: 'saved-brackets'}">
                 Saved
               </router-link>

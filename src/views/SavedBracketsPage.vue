@@ -1,12 +1,12 @@
 <template>
 	<div id='saved-brackets-page' class="box content">
 		<div v-for='(bracket, index) in savedBrackets' :key='bracket.id' class='bracket-card'>
-			<router-link class='bracket-title' :to="{name: 'edit-bracket', params: {id: bracket.id, name: bracket.name, games: bracket.games}}">
+			<router-link class='bracket-title' :to="{name: 'edit-bracket', params: {id: bracket.id, bracket: bracket}}">
 				<div class='title is-4'>
 					{{ bracket.name }}
 				</div>
 				<div class="subtitle is-6">
-						Last Updated: {{ bracket.updateAt }}
+						Last Updated: {{ bracket.updatedAt | formatDate }}
 				</div>
 			</router-link>
 			<div>
@@ -50,6 +50,16 @@ export default {
 			toDeleteIndex: -1,
 		}
 	},
+	filters: {
+		formatDate(updatedAt) {
+			const d = new Date(updatedAt)
+			const td = new Date()
+			if (d.getDate() == td.getDate() && d.getMonth() == td.getMonth() && d.getFullYear() == td.getFullYear()) {
+				return d.toLocaleTimeString(undefined, {hour: '2-digit', minute: '2-digit'})
+			}
+			return d.toLocaleString(undefined, {day: 'numeric', month: 'numeric', year: 'numeric'})
+		},
+	},
 	computed: {
 		toDeleteName() {
 			return this.savedBrackets[this.toDeleteIndex].name
@@ -66,7 +76,7 @@ export default {
 				this.$delete(this.savedBrackets, this.toDeleteIndex)
 				this.toDeleteIndex = -1
 			}).catch(() => {
-				console.log('Opps that didnt work!')
+				this.$toasted.global.failed_to_delete()
 			})
 		},
 	},

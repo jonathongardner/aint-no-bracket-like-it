@@ -33,9 +33,10 @@ export default {
     flex-wrap: no-wrap;
     border-bottom: 1px black solid;
   }
-  .team {
+  .team-info {
     display: grid;
     grid-template-columns: auto 30px;
+    align-items: center;
     div {
       white-space: nowrap;
       align-self: center;

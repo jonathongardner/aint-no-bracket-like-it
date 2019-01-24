@@ -12,7 +12,7 @@
       </div>
     </template>
     <template slot='teams'>
-      <div class='team' :class="{'winner':topWinner}">
+      <div class='team-info' :class="{'winner':topWinner}">
         <div>
           {{topTeam.rank}} {{topTeam.shortName}}
         </div>
@@ -20,7 +20,7 @@
           {{topTeam.score}}
         </div>
       </div>
-      <div class='team' :class="{'winner':bottomWinner}">
+      <div class='team-info' :class="{'winner':bottomWinner}">
         <div>
           {{bottomTeam.rank}} {{bottomTeam.shortName}}
         </div>

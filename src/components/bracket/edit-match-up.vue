@@ -12,26 +12,8 @@
       </div>
     </template>
     <template slot='teams'>
-      <label class='team' :class="{'winner':topWinner}">
-        <template v-if="topTeam.hasOwnProperty('rank')">
-          <div>
-            {{topTeam.rank}} {{topTeam.shortName}}
-          </div>
-          <div>
-            <input type="radio" value='top' v-model="winner">
-          </div>
-        </template>
-      </label>
-      <label class='team' :class="{'winner':bottomWinner}">
-        <template v-if="bottomTeam.hasOwnProperty('rank')">
-          <div>
-            {{bottomTeam.rank}} {{bottomTeam.shortName}}
-          </div>
-          <div>
-            <input type="radio" value='bottom' v-model="winner">
-          </div>
-        </template>
-      </label>
+      <team-select class='team-info' :team='topTeam' :value='value' type='top' :available='topAvailable' @input='winner'/>
+      <team-select class='team-info' :team='bottomTeam' :value='value' type='bottom' :available='bottomAvailable' @input='winner' />
     </template>
   </match-up-template>
 </template>
@@ -57,11 +39,13 @@
   winner: top|bottom|null
 }*/
 import MatchUpTemplate from '@/components/bracket/templates/match-up-template.vue'
+import TeamSelect from '@/components/bracket/team-select.vue'
 
 export default {
   name: 'edit-match-up',
   components: {
     MatchUpTemplate,
+    TeamSelect,
   },
   props: {
     value: {
@@ -76,10 +60,9 @@ export default {
         }
       }
     },
-  },
-  data() {
-    return {
-      winner: this.value,
+    availability: {
+      type: Array,
+      required: true,
     }
   },
   computed: {
@@ -89,16 +72,16 @@ export default {
     bottomTeam() {
       return this.game.bottom || {}
     },
-    topWinner() {
-      return this.winner === 'top'
+    topAvailable() {
+      return this.availability.includes('top')
     },
-    bottomWinner() {
-      return this.winner === 'bottom'
+    bottomAvailable() {
+      return this.availability.includes('bottom')
     },
   },
-  watch: {
-    winner() {
-      this.$emit('input', this.winner)
+  methods: {
+    winner(winner) {
+      this.$emit('input', winner)
     }
   }
 }

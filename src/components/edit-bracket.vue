@@ -7,9 +7,9 @@ so data doesnt have to keep propagating up
     <slot />
     <bracket-template>
       <template v-for="(game, gameNumber) in games">
-        <edit-match-up :slot="'game' + gameNumber" :game='game' :key='gameNumber'
+        <edit-match-up class='can-click' :slot="'game' + gameNumber" :game='game' :key='gameNumber'
           :value='getWinnerOfGame(gameNumber)' @input='updateWinnerOfGame(gameNumber, $event)'
-          @click='gameClicked(gameNumber)' class='can-click'/>
+          @click='gameClicked(gameNumber)' :availability='safeGameAvailability(gameNumber)'/>
       </template>
     </bracket-template>
     <!-- Use v-if so modal resets after close -->
@@ -37,7 +37,11 @@ export default {
     value: {
       type: Object,
       required: true,
-    }
+    },
+    gameAvailability: {
+      type: Object,
+      required: true,
+    },
   },
   data() {
     return {
@@ -105,15 +109,20 @@ export default {
     gameClicked(gameNumber) {
       this.gameNumber = parseInt(gameNumber, 10)
       this.showModal = true
+    },
+    safeGameAvailability(gameNumber) {
+      return this.gameAvailability.hasOwnProperty(gameNumber) ? this.gameAvailability[gameNumber] : []
     }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
+<style lang="scss">
 .can-click {
-  cursor: pointer;
+  .top-bar {
+    cursor: pointer;
+  }
 }
 // .bracket {
 //   background: #f2f2f2;

@@ -33,6 +33,19 @@ Vue.toasted.register('failed_to_save',
 	}
 )
 
+Vue.toasted.register('failed_to_delete',
+	(payload) => {
+		let toReturn = "Failed to Delete."
+		if(payload.message) {
+			toReturn += " " + payload.message
+		}
+		return toReturn
+	}, {
+		type: 'error',
+		icon: 'exclamation',
+	}
+)
+
 Vue.toasted.register('saved',
 	(payload) => {
 		let toReturn = "Saved!"
