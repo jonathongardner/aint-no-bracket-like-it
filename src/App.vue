@@ -58,7 +58,8 @@
     </nav>
     <loading :class="{'is-active': loading}" />
     <login-page v-if='showLoginPage'/>
-    <router-view v-else/>
+    <router-view v-else :key='$route.name'/>
+    <!-- Put key on so when the route name changes the page will reload -->
   </div>
 </template>
 

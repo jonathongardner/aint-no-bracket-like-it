@@ -40,7 +40,7 @@ export default {
   },
   data() {
     return {
-      id: this.$route.params.id,
+      id: null,
       name: null,
       initialGames: null,
       winnerOfGames: {},
@@ -114,7 +114,25 @@ export default {
       }).catch(() => {
         this.gameAvailability = {}
       })
-    }
+    },
+    initialize(route) {
+      if (route.params.id) {
+        this.id = route.params.id
+        const f = (data) => {
+          this.name = data.name
+          this.winnerOfGames = data.games
+          this.isUnique = data.isUnique
+        }
+        if (route.params.bracket) {
+          f(route.params.bracket)
+        } else {
+          // Then the page was loaded from a place apart from the brackets page
+          saveBracketApi.savedBracket(this.id).then(f)
+        }
+      } else {
+        this.getGameAvailability()
+      }
+    },
   },
   watch: {
     winnerOfGames() {
@@ -123,21 +141,11 @@ export default {
   },
   created() {
     this.getInitialBracket()
-    const f = (data) => {
-      this.name = data.name
-      this.winnerOfGames = data.games
-      this.isUnique = data.isUnique
-    }
-    if (this.id) {
-      if (this.$route.params.bracket) {
-        f(this.$route.params.bracket)
-      } else {
-        // Then the page was loaded from a place apart from the brackets page
-        saveBracketApi.savedBracket(this.id).then(f)
-      }
-    } else {
-      this.getGameAvailability()
-    }
+    this.initialize(this.$route)
+  },
+  beforeRouteUpdate (to, from, next) {
+    this.initialize(to)
+    next()
   }
 }
 </script>
