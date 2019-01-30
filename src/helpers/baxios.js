@@ -13,12 +13,12 @@ baxios.interceptors.request.use((config) => {
 })
 baxios.interceptors.response.use((response) => {
   if (response.headers.authorization) {
-    store.commit(UPDATETOKEN, response.headers.authorization)
+    store.dispatch(UPDATETOKEN, response.headers.authorization)
   }
   return response
 }, (error) => {
   if (error.response && error.response.status === 401) {
-    store.commit(LOGOUT)
+    store.dispatch(LOGOUT, '')
     return false
   }
   return Promise.reject(error);

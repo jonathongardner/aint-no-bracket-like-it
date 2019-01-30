@@ -65,7 +65,8 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import {LOGOUT} from '@/mutation-types'
+import {LOGOUT, SETTOKEN, REMOVETOKEN} from '@/mutation-types'
+import {authenticationApi} from '@/helpers/api.js'
 import Loading from '@/components/loading.vue'
 import LoginPage from '@/views/LoginPage.vue'
 
@@ -76,7 +77,7 @@ export default {
     LoginPage
   },
   computed: {
-    ...mapState(['username', 'loading']),
+    ...mapState(['username', 'loading', 'jwt']),
     ...mapGetters(['hasToken']),
     showLoginPage() {
       return !this.hasToken && this.$route.meta.requiresAuth
@@ -90,13 +91,45 @@ export default {
   // because app will only update on refresh.
   methods: {
     signOut() {
-      this.$store.dispatch(LOGOUT).then(() => {
+      authenticationApi.signOut().then(() => {
+        this.$store.dispatch(LOGOUT)
         this.$toasted.show('Signed out!', {type : 'success', icon: 'check'})
       })
     },
     isRoute(name) {
       return (this.$route.name === name)
     }
+  },
+  created() {
+    const token = localStorage.getItem('token')
+    if (token) {
+      this.$store.commit(SETTOKEN, token)
+    } else {
+      localStorage.setItem('newOpen', true)
+      localStorage.removeItem('newOpen')
+    }
+    // Listen to storage for token updates
+    window.addEventListener('storage', (ev) => {
+      if(!ev.newValue) return;
+      // dont use dispatch because you dont want to share
+      if (ev.key === 'token') {
+        this.$store.commit(SETTOKEN, ev.newValue)
+        return
+      }
+      if (this.hasToken) {
+        if(ev.key === 'forgetToken') {
+          this.$store.commit(REMOVETOKEN, ev.newValue)
+        } else if (ev.key === 'newOpen') {
+          localStorage.setItem('newOpenToken', this.jwt)
+          localStorage.removeItem('newOpenToken')
+        }
+      } else {
+        // TODO might not need newOpenToken but dont want to set all tokens again when tab is open
+        if (ev.key === 'newOpenToken') {
+          this.$store.commit(SETTOKEN, ev.newValue)
+        }
+      }
+    });
   }
 }
 

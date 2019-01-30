@@ -69,22 +69,5 @@ const router = new Router({
 	]
 })
 
-// router.beforeEach((to, from, next) => {
-//   if(to.matched.some(record => record.meta.requiresAuth)) {
-//     authentication.validToken(store).then(() => {
-//       next()
-//     }).catch(() => {
-//       next({name: 'login', params: {routedFrom: to.name}})
-//     })
-//     // if (authentication.validToken(store)) {
-//     //   next()
-//     // } else {
-//     //   next({name: 'login', params: {routedFrom: to.name}})
-//     // }
-//   } else {
-//     next()
-//   }
-// })
-
 
 export default router

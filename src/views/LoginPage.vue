@@ -38,8 +38,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-import { LOGIN } from '@/mutation-types'
+import {authenticationApi} from '@/helpers/api.js'
 import Errors from '@/components/errors'
 
 export default {
@@ -61,14 +60,14 @@ export default {
     }
   },
   methods: {
-    ...mapActions({login: LOGIN}),
     authenticate() {
       this.responseError = null
-      this.login({
+      authenticationApi.signIn({
         login: this.loginId,
         password: this.pword,
         session: this.rembemberMe,
       }).then(() => {
+        // Token will automatically be caught by baxios (our custom axious)
         this.$toasted.show('Signed in!', {type : 'success', icon: 'check'})
         if (this.$route.name === 'login') {
           this.$router.push({name: 'home'})

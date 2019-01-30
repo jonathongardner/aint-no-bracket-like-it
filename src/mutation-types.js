@@ -1,4 +1,7 @@
-export const LOGIN = 'LOGIN'
 export const LOGOUT = 'LOGOUT'
 export const LOADING = 'LOADING'
 export const UPDATETOKEN = 'UPDATETOKEN'
+export const SETTOKEN = 'SETTOKEN'
+export const SHARETOKEN = 'SHARETOKEN'
+export const REMOVETOKEN = 'REMOVETOKEN'
+export const FORGETTOKEN = 'FORGETTOKEN'

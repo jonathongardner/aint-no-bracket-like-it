@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {authenticationApi} from '@/helpers/api.js'
 import * as moduleTypes from './mutation-types'
 
 Vue.use(Vuex)
@@ -18,53 +17,50 @@ export default new Vuex.Store({
     hasToken: (state) => {
       return !!state.jwt
     }
-  // Cant use getter because as time changes it will not update
-  // Use helper so its at least in on place
-  //   validToken: (state) => {
-  //     return !!state.jwt && state.exp > ((new Date().getTime() / 1000) + 30)
-  //   }
   },
   mutations: {
-    [moduleTypes.UPDATETOKEN] (state, authorization) {
-      const token = authorization.substring(13)
+    [moduleTypes.SETTOKEN] (state, token) {
       const decoded = JSON.parse(atob(token.split('.')[1]))
       state.jwt = token
       state.exp = decoded.exp
       state.session = !!decoded.session
       state.userId = decoded.user.id
       state.username = decoded.user.username
-      // TODO add to local storage
-      // TODO Notify other tabs about login
     },
-    [moduleTypes.LOGOUT] (state) {
+    [moduleTypes.SHARETOKEN] (state) {
+      localStorage.setItem('token', state.jwt)
+      if (!state.session) {
+        localStorage.removeItem('token')
+      }
+    },
+    [moduleTypes.REMOVETOKEN] (state) {
+      // Set token to blank to LOGOUT
       state.jwt = ''
       state.exp = 0
       state.session = false
       state.userId = -1
       state.username = ''
-      // TODO add to local storage
-      // TODO Notify other tabs about login
+    },
+    [moduleTypes.FORGETTOKEN] () {
+      // Need to use forgetToken so that when token is deleted becasue its not a session token
+      // it can tell the difference
+      localStorage.setItem('forgetToken', true)
+      localStorage.removeItem('forgetToken')
+      localStorage.removeItem('token') // Remove in case stored for session
     },
     [moduleTypes.LOADING] (state, loading) {
       state.loading = loading
     }
   },
   actions: {
-    [moduleTypes.LOGIN] ({commit}, params) {
-      return authenticationApi.signIn(params).then((response) => {
-        commit(moduleTypes.UPDATETOKEN, response.headers.authorization)
-      })
+    [moduleTypes.UPDATETOKEN] ({commit}, authentication) {
+      const token = authentication.substring(13)
+      commit(moduleTypes.SETTOKEN, token)
+      commit(moduleTypes.SHARETOKEN)
     },
     [moduleTypes.LOGOUT] ({commit}) {
-      // TODO change this to log out api
-      return authenticationApi.signOut().then(() => {
-        commit(moduleTypes.LOGOUT)
-      })
-    },
-    [moduleTypes.UPDATETOKEN] ({commit}) {
-      return authenticationApi.updateToken().then((response) => {
-        commit(moduleTypes.UPDATETOKEN, response.headers.authorization)
-      })
+      commit(moduleTypes.REMOVETOKEN)
+      commit(moduleTypes.FORGETTOKEN)
     },
   }
 })
