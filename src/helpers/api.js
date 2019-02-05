@@ -67,4 +67,22 @@ const authenticationApi = {
     return baxios.get('/auth/update_session_token')
   },
 }
-export {bracketApi, uniqueBracketApi, saveBracketApi, authenticationApi}
+
+const adminApi = {
+  getUsers () {
+    return baxios.get('/admin/users').then(response => {
+      return response.data
+    })
+  },
+  getApprovedUsers () {
+    return baxios.get('/admin/users?approved=false').then(response => {
+      return response.data
+    })
+  },
+  updateUsers (id, approved) {
+    return baxios.get('/admin/users/' + id + '/approve?' + 'approved=' + approved).then(response => {
+      return response.data
+    })
+  }
+}
+export {bracketApi, uniqueBracketApi, saveBracketApi, authenticationApi, adminApi}

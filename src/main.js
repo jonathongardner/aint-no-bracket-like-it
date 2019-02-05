@@ -8,6 +8,16 @@ import Toasted from 'vue-toasted';
 Vue.config.productionTip = false
 Vue.use(Toasted, {iconPack: 'fontawesome', duration: 3000})
 
+
+Vue.toasted.register('failed',
+	(payload) => {
+		return payload.message
+	}, {
+		type: 'error',
+		icon: 'exclamation',
+	}
+)
+
 Vue.toasted.register('unauthenticated',
 		(payload) => {
 				if(! payload.message) {

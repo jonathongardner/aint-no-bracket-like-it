@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HomePage from './views/HomePage.vue'
 import BracketPage from './views/BracketPage.vue'
+import LoginPage from './views/LoginPage.vue'
 import ManageBracketPage from './views/ManageBracketPage.vue'
 import SavedBracketsPage from './views/SavedBracketsPage.vue'
 import bracketOptions from '@/helpers/bracketOptions.js'
@@ -18,7 +19,7 @@ const router = new Router({
 		{
 			path: '/login',
 			name: 'login',
-			component: () => import(/* webpackChunkName: "about" */ './views/LoginPage.vue')
+			component: LoginPage
 		},
 		{
 			path: '/brackets',
@@ -54,17 +55,46 @@ const router = new Router({
 			}
 		},
 		{
+			path: '/admin',
+			name: 'admin',
+			component: () => import('./views/AdminPage.vue'),
+			children: [
+				{
+					path: '',
+					redirect: 'unapproved-users'
+				},
+        {
+          path: 'unapproved-users',
+					name: 'admin-unapproved-users',
+          component: () => import('./views/AdminUserPage.vue'),
+					meta: {
+						requiresAuth: true,
+						requiresAdmin: true,
+					},
+        },
+        {
+          path: 'users',
+					name: 'admin-users',
+          component: () => import('./views/AdminUserPage.vue'),
+					meta: {
+						requiresAuth: true,
+						requiresAdmin: true,
+					},
+        }
+      ]
+		},
+		{
 			path: '/about',
 			name: 'about',
 			// route level code-splitting
 			// this generates a separate chunk (about.[hash].js) for this route
 			// which is lazy-loaded when the route is visited.
-			component: () => import(/* webpackChunkName: "about" */ './views/AboutPage.vue')
+			component: () => import('./views/AboutPage.vue')
 		},
 		{
 			path: '*',
 			name: 'not-found',
-			component: () => import(/* webpackChunkName: "about" */ './views/NotFoundPage.vue')
+			component: () => import('./views/NotFoundPage.vue')
 		}
 	]
 })

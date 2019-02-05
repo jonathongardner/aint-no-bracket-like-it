@@ -12,6 +12,7 @@
     "axios": "^0.18.0",
     "bulma": "^0.7.2",
     "bulma-pageloader": "^2.1.0",
+    "bulma-switch": "^2.0.0",
     "flush-promises": "^1.0.2",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",

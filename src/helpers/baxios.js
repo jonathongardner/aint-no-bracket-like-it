@@ -7,7 +7,7 @@ const baxios = axios.create({
 })
 baxios.interceptors.request.use((config) => {
   if (store.getters.hasToken) {
-     config.headers.common['authorization'] = 'Bearer token=' + store.state.jwt
+    config.headers.common['authorization'] = 'Bearer token=' + store.state.jwt
   }
   return config
 })
@@ -17,8 +17,9 @@ baxios.interceptors.response.use((response) => {
   }
   return response
 }, (error) => {
-  if (error.response && error.response.status === 401) {
-    store.dispatch(LOGOUT, '')
+  // Dont catch error if signing in 
+  if (!error.response.request.responseURL.endsWith('/api/auth/sign_in') && error.response && error.response.status === 401) {
+    store.dispatch(LOGOUT)
     return false
   }
   return Promise.reject(error);
