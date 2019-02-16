@@ -3,10 +3,16 @@
 		<div v-for='(bracket, index) in savedBrackets' :key='bracket.id' class='bracket-card'>
 			<router-link class='bracket-title' :to="{name: 'edit-bracket', params: {id: bracket.id, bracket: bracket}}">
 				<div class='title is-4'>
-					{{ bracket.name }}
+					<is-unique v-if='bracket.isUnique' />
+					<span> {{ bracket.name }}</span>
 				</div>
 				<div class="subtitle is-6">
+					<div v-if='bracket.isUnique'>
+						Unique Id: {{ bracket.uniqueBracketNumber }}
+					</div>
+					<div>
 						Last Updated: {{ bracket.updatedAt | formatDate }}
+					</div>
 				</div>
 			</router-link>
 			<div>
@@ -36,12 +42,14 @@
 
 <script>
 import {saveBracketApi} from '@/helpers/api.js'
+import IsUnique from '@/components/bracket/is-unique.vue'
 import MyModal from '@/components/my-modal.vue'
 
 export default {
 	name: 'SavedBracketsPage',
 	components: {
 		MyModal,
+		IsUnique,
 	},
 	data() {
 		return {
@@ -108,10 +116,5 @@ export default {
 
 .bracket-title {
 	flex: 1;
-}
-.side-buttons {
-	button.button {
-		padding: 5px 5px;
-	}
 }
 </style>
