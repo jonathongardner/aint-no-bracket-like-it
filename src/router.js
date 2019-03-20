@@ -22,6 +22,11 @@ const router = new Router({
 			component: LoginPage
 		},
 		{
+			path: '/sign-up',
+			name: 'sign-up',
+			component: () => import('./views/SignUpPage.vue'),
+		},
+		{
 			path: '/brackets',
 			redirect: '/brackets/' + bracketOptions.lastYear
 		},
@@ -56,12 +61,12 @@ const router = new Router({
 		},
 		{
 			path: '/admin',
-			name: 'admin',
 			component: () => import('./views/AdminPage.vue'),
 			children: [
 				{
 					path: '',
-					redirect: 'unapproved-users'
+					redirect: 'unapproved-users',
+					name: 'admin',
 				},
         {
           path: 'unapproved-users',

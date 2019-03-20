@@ -66,21 +66,24 @@ const authenticationApi = {
   updateToken () {
     return baxios.get('/auth/update_session_token')
   },
+  signUp (params) {
+    return baxios.post('/users', params)
+  },
 }
 
 const adminApi = {
   getUsers () {
-    return baxios.get('/admin/users').then(response => {
+    return baxios.get('/users').then(response => {
       return response.data
     })
   },
   getApprovedUsers () {
-    return baxios.get('/admin/users?approved=false').then(response => {
+    return baxios.get('/users?approved=false').then(response => {
       return response.data
     })
   },
   updateUsers (id, approved) {
-    return baxios.get('/admin/users/' + id + '/approve?' + 'approved=' + approved).then(response => {
+    return baxios.post('/users/' + id + '/approve', {approved: approved}).then(response => {
       return response.data
     })
   }

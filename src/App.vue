@@ -53,9 +53,14 @@
               </a>
             </div>
           </div>
-          <router-link class="navbar-item" v-else to="/login">
-            Sign in
-          </router-link>
+          <template v-else>
+            <router-link class="navbar-item" to="/login">
+              Sign in
+            </router-link>
+            <router-link class="navbar-item" to="/sign-up">
+              Sign up
+            </router-link>
+          </template>
         </div>
       </div>
     </nav>
