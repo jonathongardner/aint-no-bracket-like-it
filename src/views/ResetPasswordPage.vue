@@ -2,21 +2,10 @@
   <div class="hero-body">
     <div class="container has-text-centered">
       <div class="column is-4 is-offset-4">
-        <h3 class="title has-text-grey">Sign Up</h3>
-        <p class="subtitle has-text-grey">Thanks for joining!</p>
+        <h3 class="title has-text-grey">Reset Password</h3>
         <div class="box">
-          <form @submit.prevent="signUp">
+          <form @submit.prevent="resetPassword">
             <errors :responseError='responseError' defaultMessage='Could not sign up.' class="field" />
-            <div class="field">
-              <div class="control">
-                <input class="input is-large" type="email" placeholder="Email" autofocus="" v-model='email'>
-              </div>
-            </div>
-            <div class="field">
-              <div class="control">
-                <input class="input is-large" type="username" placeholder="Username" autofocus="" v-model='username'>
-              </div>
-            </div>
             <div class="field">
               <div class="control">
                 <input class="input is-large" type="password" placeholder="Password" v-model='pword'>
@@ -29,14 +18,9 @@
               </div>
               <p v-if='pwordsDontMatch' class="help is-danger">Passwords don't match.</p>
             </div>
-            <div class="field">
-              <label class="checkbox">
-                <input type="checkbox" v-model='rembemberMe'> Remember me
-              </label>
-            </div>
             <button id='submitButton' type="submit" class="button is-block is-info is-large is-fullwidth"
               :class="{'is-disabled': dontSubmit}" :disabled='dontSubmit'>
-              Sign Up!
+              Reset Password
             </button>
           </form>
         </div>
@@ -50,18 +34,15 @@ import {userApi} from '@/helpers/api.js'
 import Errors from '@/components/errors'
 
 export default {
-  name: 'LoginPage',
+  name: 'ResetPassword',
   components: {
     Errors,
   },
   data() {
     return {
       responseError: null,
-      email: '',
-      username: '',
       pword: '',
       pwordCon: '',
-      rembemberMe: false,
     }
   },
   computed: {
@@ -72,24 +53,20 @@ export default {
       return this.pword != this.pwordCon
     },
     dontSubmit() {
-      return !this.email || !this.username || this.pwordNotComplicatedEnough || this.pwordsDontMatch
+      return this.pwordNotComplicatedEnough || this.pwordsDontMatch
     }
   },
   methods: {
-    signUp() {
+    resetPassword() {
       this.responseError = null
-      userApi.signUp({
-        user: {
-          email: this.email,
-          username: this.username,
-          password: this.pword,
-          password_confirmation: this.pwordCon,
-        },
-        session: this.rembemberMe,
+      userApi.resetPassword({
+        reset_password_token: this.$route.params.token,
+        password: this.pword,
+        password_confirmation: this.pwordCon,
       }).then(() => {
         // Token will automatically be caught by baxios (our custom axious)
-        this.$toasted.global.success({message: 'Signed up!'})
-        this.$router.push('/')
+        this.$toasted.global.success({message: 'Updated Password!'})
+        this.$router.push('/login')
       }).catch(error => {
         this.responseError = error
       }).then(() => {

@@ -66,26 +66,57 @@ const authenticationApi = {
   updateToken () {
     return baxios.get('/auth/update_session_token')
   },
+}
+
+const userApi = {
   signUp (params) {
     return baxios.post('/users', params)
+  },
+  updateUser (params) {
+    return baxios.patch('/users', params)
+  },
+  validateEmail (params) {
+    return baxios.patch('/users/validate_email', params).then(response => {
+      return response.data
+    })
+  },
+  forgotPassword (params) {
+    return baxios.get('/users/forgot_password', params).then(response => {
+      return response.data
+    })
+  },
+  resetPassword (params) {
+    return baxios.patch('/users/reset_password', params).then(response => {
+      return response.data
+    })
   },
 }
 
 const adminApi = {
   getUsers () {
-    return baxios.get('/users').then(response => {
+    return baxios.get('/admin/users').then(response => {
       return response.data
     })
   },
   getApprovedUsers () {
-    return baxios.get('/users?approved=false').then(response => {
+    return baxios.get('/admin/users?approved=false').then(response => {
       return response.data
     })
   },
-  updateUsers (id, approved) {
-    return baxios.post('/users/' + id + '/approve', {approved: approved}).then(response => {
+  approveUser (id, approved) {
+    return baxios.patch('/admin/users/' + id + '/approve', {approved: approved}).then(response => {
+      return response.data
+    })
+  },
+  sendEmailConfirmation (id) {
+    return baxios.get('/admin/users/' + id + '/email_confirmation').then(response => {
+      return response.data
+    })
+  },
+  sendForgotPassword (id) {
+    return baxios.get('/admin/users/' + id + '/forgot_password').then(response => {
       return response.data
     })
   }
 }
-export {bracketApi, uniqueBracketApi, saveBracketApi, authenticationApi, adminApi}
+export {bracketApi, uniqueBracketApi, saveBracketApi, authenticationApi, userApi, adminApi}

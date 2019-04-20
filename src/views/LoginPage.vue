@@ -29,8 +29,8 @@
           </form>
         </div>
         <p class="has-text-grey">
-          <a href="../">Sign Up</a> &nbsp;·&nbsp;
-          <a href="../">Forgot Password</a>
+          <router-link to="/sign-up">Sign Up</router-link> &nbsp;·&nbsp;
+          <router-link :to="{name: 'forgot-password', params: {email: loginIsEmail}}">Forgot Password?</router-link>
         </p>
       </div>
     </div>
@@ -57,7 +57,10 @@ export default {
   computed: {
     dontSubmit() {
       return !this.loginId || !this.pword
-    }
+    },
+    loginIsEmail() {
+      return this.loginId.includes('@') ? this.loginId : ''
+    },
   },
   methods: {
     authenticate() {
@@ -68,7 +71,7 @@ export default {
         session: this.rembemberMe,
       }).then(() => {
         // Token will automatically be caught by baxios (our custom axious)
-        this.$toasted.show('Signed in!', {type : 'success', icon: 'check'})
+        this.$toasted.global.success({message: 'Signed in!'})
         if (this.$route.name === 'login') {
           this.$router.push({name: 'home'})
         }

@@ -69,6 +69,15 @@ Vue.toasted.register('saved',
 	}
 )
 
+Vue.toasted.register('success',
+	(payload) => {
+		return payload.message
+	}, {
+		type: 'success',
+		icon: 'check',
+	}
+)
+
 new Vue({
 	router,
 	store,

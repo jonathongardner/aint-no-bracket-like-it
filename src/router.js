@@ -27,6 +27,24 @@ const router = new Router({
 			component: () => import('./views/SignUpPage.vue'),
 		},
 		{
+			path: '/forgot-password',
+			name: 'forgot-password',
+			component: () => import('./views/ForgotPasswordPage.vue'),
+		},
+		{
+			path: '/reset-password/:token',
+			name: 'reset-password',
+			component: () => import('./views/ResetPasswordPage.vue'),
+		},
+		{
+			path: '/confirm-email/:token',
+			name: 'confirm-email',
+			component: () => import('./views/ConfirmEmailPage.vue'),
+			meta: {
+				requiresAuth: true
+			}
+		},
+		{
 			path: '/brackets',
 			redirect: '/brackets/' + bracketOptions.lastYear
 		},

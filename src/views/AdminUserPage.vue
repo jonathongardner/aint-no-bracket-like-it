@@ -6,10 +6,11 @@
           <th>Username</th>
           <th>Email</th>
           <th>Approved</th>
+          <th />
         </tr>
       </thead>
       <tbody>
-        <tr v-for='user in usersToShow' :key='user.id'>
+        <tr v-for='(user, index) in usersToShow' :key='user.id'>
           <td>
             <i class="fas fa-user"></i> {{ user.username }}
           </td>
@@ -19,31 +20,46 @@
             </a>
           </td>
           <td>
-            <div class="field" @click="updateUser(user.id, !user.approved)">
+            <div class="field" @click="approveUser(user.id, !user.approved)">
               <input type="checkbox" class="switch is-rounded" :checked='user.approved'>
               <label></label>
             </div>
           </td>
+          <td>
+            <button class='button' @click='openEditUserModal(index)'>
+              <i class="fas fa-eye"></i>
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
+    <admin-edit-user-modal v-if='showModal' :user='user' @input='showModal = false'/>
   </div>
 </template>
 
 <script>
 import {adminApi} from '@/helpers/api.js'
+import AdminEditUserModal from '@/components/admin-edit-user-modal.vue'
 
 export default {
 	name: 'AdminPage',
+  components: {
+    AdminEditUserModal,
+  },
 	data() {
 		return {
 			users: [],
+      showModal: false,
+      selected_user_index: 0,
 		}
 	},
 	computed: {
 		usersToShow() {
 			return this.users
 		},
+    user() {
+      return this.usersToShow[this.selected_user_index]
+    }
 	},
   filters: {
 		mailTo(email) {
@@ -57,8 +73,8 @@ export default {
       }
       return adminApi.getApprovedUsers()
     },
-    updateUser(id, approve) {
-      adminApi.updateUsers(id, approve).then((data) => {
+    approveUser(id, approve) {
+      adminApi.approveUser(id, approve).then((data) => {
         const userIndex = this.users.findIndex((u) => {
           return u.id === id
         })
@@ -77,6 +93,10 @@ export default {
       }).catch(() => {
 				this.$toasted.global.failed("Error loading users.")
 			})
+    },
+    openEditUserModal(index) {
+      this.selected_user_index = index
+      this.showModal = true
     },
 	},
 	created() {
