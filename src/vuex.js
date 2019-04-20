@@ -13,6 +13,7 @@ export default new Vuex.Store({
     username: '',
     admin: false,
     approved: false,
+    emailConfirmed: false,
     loading: false,
   },
   getters: {
@@ -30,6 +31,7 @@ export default new Vuex.Store({
       state.username = decoded.user.username
       state.admin = decoded.user.admin
       state.approved = decoded.user.approved
+      state.emailConfirmed = decoded.user.email_confirmed
     },
     [moduleTypes.SHARETOKEN] (state) {
       localStorage.setItem('token', state.jwt)

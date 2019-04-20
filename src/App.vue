@@ -67,6 +67,7 @@
     <loading :class="{'is-active': loading}" />
     <login-page v-if='showLoginPage'/>
     <unconfirmed-page v-else-if='showUnconfirmedPage'/>
+    <unconfirmed-email-page v-else-if='showUnconfirmedEmailPage'/>
     <forbidden-page v-else-if='showForbiddenPage'/>
     <router-view v-else :key='$route.name'/>
     <!-- Put key on so when the route name changes the page will reload -->
@@ -78,26 +79,31 @@ import { mapState, mapGetters } from 'vuex'
 import {LOGOUT, SETTOKEN, REMOVETOKEN} from '@/mutation-types'
 import {authenticationApi} from '@/helpers/api.js'
 import Loading from '@/components/loading.vue'
-import LoginPage from '@/views/LoginPage.vue'
-import ForbiddenPage from '@/views/ForbiddenPage.vue'
-import UnconfirmedPage from '@/views/UnconfirmedPage.vue'
+import LoginPage from '@/views/Common/LoginPage.vue'
+import UnconfirmedPage from '@/views/Error/UnconfirmedPage.vue'
+import UnconfirmedEmailPage from '@/views/Error/UnconfirmedEmailPage.vue'
+import ForbiddenPage from '@/views/Error/ForbiddenPage.vue'
 
 export default {
   name: 'App',
   components: {
     Loading,
     LoginPage,
-    ForbiddenPage,
     UnconfirmedPage,
+    UnconfirmedEmailPage,
+    ForbiddenPage,
   },
   computed: {
-    ...mapState(['username', 'loading', 'jwt', 'approved', 'admin']),
+    ...mapState(['username', 'loading', 'jwt', 'approved', 'emailConfirmed', 'admin']),
     ...mapGetters(['hasToken']),
     showLoginPage() {
-      return !this.hasToken && this.$route.meta.requiresAuth
+      return !this.hasToken && (this.$route.meta.requiresAuth || this.$route.meta.requiresToken)
     },
     showUnconfirmedPage() {
       return !this.approved && this.$route.meta.requiresAuth
+    },
+    showUnconfirmedEmailPage() {
+      return !this.emailConfirmed && this.$route.meta.requiresAuth
     },
     showForbiddenPage() {
       return !this.admin && this.$route.meta.requiresAdmin

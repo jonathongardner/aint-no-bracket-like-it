@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HomePage from './views/HomePage.vue'
-import BracketPage from './views/BracketPage.vue'
-import LoginPage from './views/LoginPage.vue'
-import ManageBracketPage from './views/ManageBracketPage.vue'
-import SavedBracketsPage from './views/SavedBracketsPage.vue'
+import HomePage from './views/Common/HomePage.vue'
+import BracketPage from './views/Bracket/BracketPage.vue'
+import LoginPage from './views/Common/LoginPage.vue'
+import ManageBracketPage from './views/Bracket/ManageBracketPage.vue'
+import SavedBracketsPage from './views/Bracket/SavedBracketsPage.vue'
 import bracketOptions from '@/helpers/bracketOptions.js'
 
 Vue.use(Router)
@@ -24,25 +24,7 @@ const router = new Router({
 		{
 			path: '/sign-up',
 			name: 'sign-up',
-			component: () => import('./views/SignUpPage.vue'),
-		},
-		{
-			path: '/forgot-password',
-			name: 'forgot-password',
-			component: () => import('./views/ForgotPasswordPage.vue'),
-		},
-		{
-			path: '/reset-password/:token',
-			name: 'reset-password',
-			component: () => import('./views/ResetPasswordPage.vue'),
-		},
-		{
-			path: '/confirm-email/:token',
-			name: 'confirm-email',
-			component: () => import('./views/ConfirmEmailPage.vue'),
-			meta: {
-				requiresAuth: true
-			}
+			component: () => import('./views/Common/SignUpPage.vue'),
 		},
 		{
 			path: '/brackets',
@@ -78,8 +60,26 @@ const router = new Router({
 			}
 		},
 		{
+			path: '/forgot-password',
+			name: 'forgot-password',
+			component: () => import('./views/UserManagement/ForgotPasswordPage.vue'),
+		},
+		{
+			path: '/reset-password/:token',
+			name: 'reset-password',
+			component: () => import('./views/UserManagement/ResetPasswordPage.vue'),
+		},
+		{
+			path: '/confirm-email/:token',
+			name: 'confirm-email',
+			component: () => import('./views/UserManagement/ConfirmEmailPage.vue'),
+			meta: {
+				requiresToken: true // requiresToken does need user to have valid email or be approved
+			}
+		},
+		{
 			path: '/admin',
-			component: () => import('./views/AdminPage.vue'),
+			component: () => import('./views/Admin/AdminPage.vue'),
 			children: [
 				{
 					path: '',
@@ -89,7 +89,7 @@ const router = new Router({
         {
           path: 'unapproved-users',
 					name: 'admin-unapproved-users',
-          component: () => import('./views/AdminUserPage.vue'),
+          component: () => import('./views/Admin/AdminUserPage.vue'),
 					meta: {
 						requiresAuth: true,
 						requiresAdmin: true,
@@ -98,7 +98,7 @@ const router = new Router({
         {
           path: 'users',
 					name: 'admin-users',
-          component: () => import('./views/AdminUserPage.vue'),
+          component: () => import('./views/Admin/AdminUserPage.vue'),
 					meta: {
 						requiresAuth: true,
 						requiresAdmin: true,
@@ -112,12 +112,12 @@ const router = new Router({
 			// route level code-splitting
 			// this generates a separate chunk (about.[hash].js) for this route
 			// which is lazy-loaded when the route is visited.
-			component: () => import('./views/AboutPage.vue')
+			component: () => import('./views/Common/AboutPage.vue')
 		},
 		{
 			path: '*',
 			name: 'not-found',
-			component: () => import('./views/NotFoundPage.vue')
+			component: () => import('./views/Error/NotFoundPage.vue')
 		}
 	]
 })
